@@ -1,15 +1,32 @@
-# main function　
+#########################
+# define the main function with while loops
 def coffee_bot():
   print('Welcome to the Bot cafe!')
-  size = get_size()
-  drink_type = get_drink_type()
-  temp = hot_or_iced()
-  cup = cup_type()
-  print('Alright, that\'s a {} {} {} in {} cup!\n'.format(temp, size, drink_type, cup))
-  name = input('Can I get your name please?\n')
-  print('Thanks, {}! You\'re all set. Your order will be ready shortly!\n'.format(name))
-  additional_drink()
+  order_drink = 'y'
+  drinks = []
+  while order_drink in ['y', 'yes', 'yeah', 'yep', 'sure']:
+    size = get_size()
+    drink_type = get_drink_type()
+    temp = hot_or_iced()
+    cup = cup_type()
+    drink = '{} {} {}'.format(temp, size, drink_type)
+    print('Alright, that\'s a {} {} {} in {} cup!\n'.format(temp, size, drink_type, cup))
+    drinks.append(drink)
 
+    while True:
+      order_drink = input('Would you like to order another drink? (y/n) \n>')
+      if order_drink in ['y', 'n', 'yes', 'sure', 'yep', 'yeah', 'no', 'nah']:
+        break
+
+  print('Okay, so I have: ')
+  for drink in drinks:
+    print('-', drink)
+
+  name = input('Can I get your name please? \n> ')
+  print('Thanks, {}! You\'re all set. Your order will be ready shortly!\n'.format(name))
+
+
+#########################
 # get drink size
 def get_size():
   res = input('What size drink can I get for you? \n[a] Small \n[b] Medium \n[c] Large \n> ')
@@ -33,7 +50,7 @@ def get_drink_type():
   if res == 'a':
     return 'brewed coffee'
   elif res == 'b':
-    return 'mocha'
+    return order_mocha()
   elif res == 'c':
     return order_latte()
   else:
@@ -52,6 +69,17 @@ def order_latte():
   else:
     print_message()
     return order_latte()
+
+# extra option for mocha
+def order_mocha():
+  while True:
+    res = input('Would you like to try our limited-edition peppermint mocha? \n[a] Sure! \n[b] Maybe next time! \n')
+    if res == 'a':
+      return 'peppermint mocha'
+    elif res == 'b':
+      return 'mocha'
+    
+    print_message()
 
 # hot or iced
 def hot_or_iced():
@@ -77,24 +105,7 @@ def cup_type():
     print_message()
     return cup_type()
 
-# extra for half the price?
-def extra_situation():
-  size = get_size()
-  drink_type = get_drink_type()
-  temp = hot_or_iced()
-  cup = cup_type()
-  print('Alright, that\'s a {} {} {} in {} cup!\n'.format(temp, size, drink_type, cup))
-  print('You\'re all set.')
 
-def additional_drink():
-  res = input('By the way, would you like to order an additional drink for half the price? \n[a] Great, why not? \n[b] No, thanks. \n')
-  if res == 'a':
-    return extra_situation()
-  elif res == 'b':
-    return print('Got it! Your order will be ready shortly!')
-  else:
-    print_message()
-    return additional_drink()
-
-# Call coffee_bot()!
+# call the main function
 coffee_bot()
+
